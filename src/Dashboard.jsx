@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/workouts`);
+      const res = await axios.get("/api/workouts");
 
       setWorkouts(res.data.workouts || res.data);
       setLoading(false);
