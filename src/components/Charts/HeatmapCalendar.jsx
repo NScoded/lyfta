@@ -39,11 +39,11 @@ export default function HeatmapCalendar({ workouts }) {
           },
 
           "& .react-calendar-heatmap .color-scale-1": {
-            fill: "#00000", // your blue
+            fill: "#22d3ee", // your blue
           },
 
           "& .react-calendar-heatmap text": {
-            fill: "#94a3b8",
+            fill: "#000000",
             fontSize: "10px",
           },
         }}
