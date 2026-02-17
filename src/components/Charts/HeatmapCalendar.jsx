@@ -11,7 +11,7 @@ export default function HeatmapCalendar({ workouts }) {
   return (
     <Box
       sx={{
-        background: "#1e293b",   
+        background: "#1e293b",
         p: 3,
         borderRadius: 3,
         mb: 6,
@@ -35,15 +35,17 @@ export default function HeatmapCalendar({ workouts }) {
           },
 
           "& .react-calendar-heatmap .color-empty": {
-            fill: "#0f172a", // old dark bg
+            fill: "#0f172a",
           },
 
-          /* Hide Sundays */
-          "& .react-calendar-heatmap rect:nth-of-type(7n+1)": {
-            fill: "transparent !important",
-            pointerEvents: "none",
           "& .react-calendar-heatmap .color-scale-1": {
-            fill: "#22d3ee", // your blue
+            fill: "#22d3ee",
+          },
+
+          /* 🔥 Hide Sundays properly */
+          "& .react-calendar-heatmap rect:nth-of-type(7n+1)": {
+            fill: "transparent",
+            pointerEvents: "none",
           },
 
           "& .react-calendar-heatmap text": {
