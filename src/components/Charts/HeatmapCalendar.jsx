@@ -38,12 +38,16 @@ export default function HeatmapCalendar({ workouts }) {
             fill: "#0f172a", // old dark bg
           },
 
+          /* Hide Sundays */
+          "& .react-calendar-heatmap rect:nth-of-type(7n+1)": {
+            fill: "transparent !important",
+            pointerEvents: "none",
           "& .react-calendar-heatmap .color-scale-1": {
             fill: "#22d3ee", // your blue
           },
 
           "& .react-calendar-heatmap text": {
-            fill: "#000000",
+            fill: "#94a3b8",
             fontSize: "10px",
           },
         }}
