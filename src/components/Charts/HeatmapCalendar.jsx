@@ -11,7 +11,7 @@ export default function HeatmapCalendar({ workouts }) {
   return (
     <Box
       sx={{
-        background: "#1e293b",   // same old bg
+        background: "white",   // same old bg
         p: 3,
         borderRadius: 3,
         mb: 6,
