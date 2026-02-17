@@ -11,7 +11,7 @@ export default function HeatmapCalendar({ workouts }) {
   return (
     <Box
       sx={{
-        background: "white",   // same old bg
+        background: "#1e293b",   // same old bg
         p: 3,
         borderRadius: 3,
         mb: 6,
@@ -39,7 +39,7 @@ export default function HeatmapCalendar({ workouts }) {
           },
 
           "& .react-calendar-heatmap .color-scale-1": {
-            fill: "#22d3ee", // your blue
+            fill: "#00000", // your blue
           },
 
           "& .react-calendar-heatmap text": {
