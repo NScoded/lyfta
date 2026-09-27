@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Typography, Box } from "@mui/material";
+import { Alert, Container, Typography, Box } from "@mui/material";
 import axios from "axios";
 
 import HeatmapCalendar from "./components/Charts/HeatmapCalendar";
@@ -15,13 +15,33 @@ import { calculateStreak } from "./utils/streakUtils";
 export default function Dashboard() {
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("/api/workouts");
+      try {
+        const res = await axios.get("/api/workouts");
+        const data =
+          res.data?.workouts ??
+          res.data?.data?.workouts ??
+          res.data?.data ??
+          res.data;
 
-      setWorkouts(res.data.workouts || res.data);
-      setLoading(false);
+        if (!Array.isArray(data)) {
+          throw new Error("Lyfta returned an unexpected workouts response.");
+        }
+
+        setWorkouts(data);
+      } catch (requestError) {
+        setError(
+          requestError.response?.data?.error ||
+            requestError.response?.data?.message ||
+            requestError.message ||
+            "Unable to load workouts."
+        );
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, []);
@@ -53,6 +73,8 @@ export default function Dashboard() {
     <Navbar streak={streak} />
 
     <Container sx={{ py: 6 }}>
+      {error && <Alert severity="error" sx={{ mb: 4 }}>{error}</Alert>}
+
       <SummarySection
         workouts={workouts}
         totalVolume={totalVolume}

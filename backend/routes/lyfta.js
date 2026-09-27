@@ -5,6 +5,12 @@ const router = express.Router();
 
 // WORKOUTS
 router.get("/workouts", async (req, res) => {
+  if (!process.env.LYFTA_API_KEY) {
+    return res.status(503).json({
+      error: "Lyfta API key is missing. Set LYFTA_API_KEY in the project .env file.",
+    });
+  }
+
   try {
     const response = await axios.get(
       "https://my.lyfta.app/api/v1/workouts",

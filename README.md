@@ -1,4 +1,12 @@
-# React + Vite
+# Lyfta Dashboard
+
+## Development
+
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env` and set `LYFTA_API_KEY` to your Lyfta API key.
+3. Run `npm run dev` to start the Vite UI and Express API server together.
+
+Vite serves the UI at `http://localhost:5173` and proxies `/api` requests to the API server on port 5000.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
