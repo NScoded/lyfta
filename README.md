@@ -10,7 +10,13 @@ Vite serves the UI at `http://localhost:5173` and proxies `/api` requests to the
 
 ## Vercel
 
-Vercel serves `api/workouts.js` as a serverless function. Add `LYFTA_API_KEY` under **Project Settings > Environment Variables** for the Production environment (and Preview if needed), then redeploy. Keep the key in Vercel's environment settings; do not commit it or expose it in a `VITE_` variable.
+Vercel serves `api/workouts.js` as a serverless function at `/api/workouts`. In your Vercel project, open **Settings > Environment Variables > Add New** and set:
+
+- **Key:** `LYFTA_API_KEY`
+- **Value:** your Lyfta API key
+- **Environments:** Production (and Preview if needed)
+
+Save the variable and redeploy so the function can read it. Keep the key in Vercel's environment settings; do not commit it or expose it in a `VITE_` variable. The frontend calls `/api/workouts` on the same domain, so the deployed request goes to the Vercel function; the localhost proxy in `vite.config.js` is only for local development.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

@@ -1,31 +1,160 @@
-export function calculateStreak(workouts) {
-  if (!workouts.length) return 0;
+export function calculateStreak(workouts = []) {
+  if (!Array.isArray(workouts) || workouts.length === 0) {
+    return 0;
+  }
 
-  // Unique workout dates (YYYY-MM-DD)
-  const workoutDates = [
-    ...new Set(workouts.map((w) => w.workout_perform_date.split(" ")[0])),
-  ].sort((a, b) => new Date(b) - new Date(a));
+  /*
+    Store workout dates.
+
+    Sunday is NOT stored because Sunday is
+    the gym's fixed rest day.
+  */
+
+  const workoutDates = new Set();
+
+  workouts.forEach((workout) => {
+    if (!workout?.workout_perform_date) {
+      return;
+    }
+
+    const dateKey = String(
+      workout.workout_perform_date
+    ).split(" ")[0];
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey)) {
+      return;
+    }
+
+    const [year, month, day] = dateKey
+      .split("-")
+      .map(Number);
+
+    const date = new Date(
+      year,
+      month - 1,
+      day
+    );
+
+    /*
+      Sunday = 0
+
+      Sunday is a fixed gym rest day,
+      so it must never be counted as a
+      required workout day.
+    */
+
+    if (date.getDay() === 0) {
+      return;
+    }
+
+    workoutDates.add(dateKey);
+  });
+
+  if (workoutDates.size === 0) {
+    return 0;
+  }
+
+  /* ============================================================
+     DATE HELPERS
+  ============================================================ */
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+
+    const month = String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
+
+    const day = String(
+      date.getDate()
+    ).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  /* ============================================================
+     CURRENT STREAK
+
+     Rules:
+
+     Monday -> Saturday
+       Workout required.
+
+     Sunday
+       Gym closed.
+       Does NOT break the streak.
+
+     Saturday -> Monday
+       Counts as consecutive streak days.
+  ============================================================ */
+
+  const today = new Date();
+
+  let currentDate = new Date(today);
+
+  /*
+    If today is Sunday:
+
+    Sunday is a rest day, so start checking
+    from Saturday.
+  */
+
+  if (currentDate.getDay() === 0) {
+    currentDate.setDate(
+      currentDate.getDate() - 1
+    );
+  } else {
+    /*
+      Today is Monday-Saturday.
+
+      If today's workout is missing,
+      current streak is already broken.
+    */
+
+    const todayKey = formatDate(
+      currentDate
+    );
+
+    if (!workoutDates.has(todayKey)) {
+      return 0;
+    }
+  }
 
   let streak = 0;
-  let currentDate = new Date(workoutDates[0]);
 
-  for (let i = 0; i < workoutDates.length; i++) {
-    const workoutDate = new Date(workoutDates[i]);
+  while (true) {
+    /*
+      Sunday is ignored completely.
 
-    // If same day → count it
-    if (workoutDate.toDateString() === currentDate.toDateString()) {
-      streak++;
+      It cannot break the streak.
+    */
 
-      // Move to previous working day
-      currentDate.setDate(currentDate.getDate() - 1);
+    if (currentDate.getDay() === 0) {
+      currentDate.setDate(
+        currentDate.getDate() - 1
+      );
 
-      // Skip Sundays (but do NOT count them)
-      while (currentDate.getDay() === 0) {
-        currentDate.setDate(currentDate.getDate() - 1);
-      }
-    } else {
+      continue;
+    }
+
+    const dateKey = formatDate(
+      currentDate
+    );
+
+    /*
+      No workout on a required gym day
+      means the streak ends.
+    */
+
+    if (!workoutDates.has(dateKey)) {
       break;
     }
+
+    streak++;
+
+    currentDate.setDate(
+      currentDate.getDate() - 1
+    );
   }
 
   return streak;
