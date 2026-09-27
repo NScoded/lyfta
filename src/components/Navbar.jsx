@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
@@ -127,15 +126,17 @@ export default function Navbar({ streak = 0 }) {
               },
             }}
           >
-            <FitnessCenterIcon
+            <Box
+              component="img"
+              src="https://play-lh.googleusercontent.com/AX-6eXLHm5zP_VdCnZR5l0JCKpfkA2SgUHHtiLKl-o4zzh5Z21mDbHrjeUYEasrSjDYGWBJDhcKK8e1WjKEM%3Dw240-h480"
+              alt="Lyfta"
               sx={{
-                color: "#fff",
-                fontSize: { xs: 22, md: 25 },
-
-                filter:
-                  "drop-shadow(0 2px 5px rgba(0,0,0,0.3))",
-
+                width: { xs: 29, md: 38 },
+                height: { xs: 299, md: 38 },
+                objectFit: "cover",
+                borderRadius: "100px",
                 zIndex: 1,
+                filter: "drop-shadow(0 2px 5px rgba(0,0,0,0.3))",
               }}
             />
           </Box>
@@ -589,6 +590,10 @@ export default function Navbar({ streak = 0 }) {
 
           <Tooltip title="Lyfta Profile" arrow>
             <Box
+              component="a"
+              href="https://lyfta.app/profile/user/6hp0d"
+              target="_blank"
+              rel="noreferrer"
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -621,46 +626,38 @@ export default function Navbar({ streak = 0 }) {
                 },
               }}
             >
-              <Avatar
-                alt="Lyfta Profile"
-                sx={{
-                  width: {
-                    xs: 36,
-                    sm: 40,
-                  },
+<Avatar
+  alt="Lyfta Profile"
+  src="https://cdnlyfta.com/images/original/profilePic_68e7b22fd70108.603438566775.jpg"
+  sx={{
+    width: {
+      xs: 36,
+      sm: 50,
+    },
 
-                  height: {
-                    xs: 36,
-                    sm: 40,
-                  },
+    height: {
+      xs: 36,
+      sm: 50,
+    },
 
-                  borderRadius: "12px",
+    borderRadius: "120px",
 
-                  background:
-                    "linear-gradient(135deg, #22c55e, #06b6d4)",
+    border: "2px solid rgba(255,255,255,0.12)",
 
-                  border:
-                    "2px solid rgba(255,255,255,0.12)",
+    boxShadow: "0 6px 20px rgba(34,197,94,0.2)",
 
-                  color: "#fff",
+    transition: "all 0.25s ease",
 
-                  fontWeight: 900,
+    "& img": {
+      objectFit: "cover",
+      objectPosition: "center 9%",
+    },
 
-                  fontSize: "0.9rem",
-
-                  boxShadow:
-                    "0 6px 20px rgba(34,197,94,0.2)",
-
-                  transition: "all 0.25s ease",
-
-                  "&:hover": {
-                    boxShadow:
-                      "0 8px 28px rgba(34,197,94,0.3)",
-                  },
-                }}
-              >
-                N
-              </Avatar>
+    "&:hover": {
+      boxShadow: "0 8px 28px rgba(34,197,94,0.3)",
+    },
+  }}
+/>
 
               {/* Hide on mobile */}
 
