@@ -7,12 +7,20 @@ export default async function handler(req, res) {
     return res.status(204).end();
   }
 
+  const apiKey = process.env.LYFTA_API_KEY;
+  if (!apiKey) {
+    return res.status(503).json({
+      status: false,
+      error: "LYFTA_API_KEY is not configured for this deployment.",
+    });
+  }
+
   try {
     const response = await fetch(
       "https://my.lyfta.app/api/v1/workouts",
       {
         headers: {
-          Authorization: `Bearer ${process.env.LYFTA_API_KEY}`,
+          Authorization: `Bearer ${apiKey}`,
         },
       }
     );
